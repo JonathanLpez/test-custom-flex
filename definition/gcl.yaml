@@ -1,0 +1,128 @@
+---
+apiVersion: gateway.mulesoft.com/v1alpha1
+kind: Extension
+metadata:
+  labels:
+    title: Third Party OAuth Authentication
+    description: Internally authenticate consumer with third parties
+    category: Custom
+spec:
+  extends:
+    - name: extension-definition
+      namespace: default
+  properties:
+    oauthProvider:
+      title: "Oauth Provider"
+      type: string
+      enum:
+        - "SAP - Fioneer"
+        - "Fiserv" 
+        - "Arcus"
+    oauthUri:
+      title: "Oauth Service Host"
+      type: string
+      format: service
+      default: "https://auth-service:9000"
+    oauthPath:
+      title: "Oauth Service Path"
+      type: string
+      default: /login
+    oauthGrantType:
+      title: "Oauth Grant Type"
+      type: string
+      default: password
+      "@context": {
+      "@characteristics": [
+          "security:sensitive"
+        ]
+      }
+    oauthUserHeader:
+      title: "Oauth User for Basic Auth"
+      type: string
+      "@context": {
+      "@characteristics": [
+          "security:sensitive"
+        ],
+      "@rendering": {
+        "@visibleOn": {
+          "property": "oauthProvider",
+          "value": "SAP - Fioneer"
+        }
+      }
+      }
+      default: admin
+    oauthPasswordHeader:
+      title: "Oauth Password for Basic Auth"
+      type: string
+      "@context": {
+      "@characteristics": [
+          "security:sensitive"
+        ],
+      "@rendering": {
+        "@visibleOn": {
+          "property": "oauthProvider",
+          "value": "SAP - Fioneer"
+        }
+      }
+      }
+      default: password
+    oauthUserBody:
+      title: "Oauth User"
+      type: string
+      "@context": {
+      "@characteristics": [
+          "security:sensitive"
+        ],
+      "@rendering": {
+        "@visibleOn": {
+          "property": "oauthProvider",
+          "value": "SAP - Fioneer"
+        }
+      }      
+      }
+      default: admin
+    oauthPasswordBody:
+      title: "Oauth Password"
+      type: string
+      "@context": {
+      "@characteristics": [
+          "security:sensitive"
+        ],
+      "@rendering": {
+        "@visibleOn": {
+          "property": "oauthProvider",
+          "value": "SAP - Fioneer"
+        }
+      }
+      } 
+      default: password
+    oauthApiKey:
+      title: "Oauth API Key"
+      type: string
+      "@context": {
+      "@characteristics": [
+          "security:sensitive"
+        ]
+      }
+      default: apiKey
+    oauthClientSecret:
+      title: "Oauth Client Secret"
+      type: string
+      "@context": {
+      "@characteristics": [
+          "security:sensitive"
+        ]
+      }
+      default: client_secret
+
+  required:
+    - oauthProvider
+    - oauthUri
+    - oauthGrantType
+    - oauthPath
+    - oauthUserHeader
+    - oauthPasswordHeader
+    - oauthUserBody
+    - oauthPasswordBody
+    - oauthApiKey
+    - oauthClientSecret
